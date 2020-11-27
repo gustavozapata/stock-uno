@@ -1,23 +1,29 @@
 <template>
   <div id="app">
-    <Header />
-    <StockContainer v-bind:stocks="stocks" />
-    <StockContainer v-bind:stocks="currencies" />
+    <div>
+      <Header />
+      <StockContainer v-bind:stocks="stocks" v-on:select-stock="selectStock" />
+      <StockContainer v-bind:stocks="currencies" v-on:select-stock="selectStock" />
+    </div>
+    <Timeline v-bind:title="timelineTitle"/>
   </div>
 </template>
 
 <script>
 import Header from './components/Header'
+import Timeline from "./components/Timeline"
 import StockContainer from './components/StockContainer'
 
 export default {
   name: 'App',
   components: {
-   StockContainer,
-   Header
+    Header,
+    StockContainer,
+    Timeline
   },
   data(){
     return {
+      timelineTitle: "All stocks",
       currencies: [
          {
           id: 1,
@@ -54,6 +60,11 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    selectStock(name){
+      this.timelineTitle = name
+    }
   }
 }
 </script>
@@ -68,8 +79,8 @@ body {
   font-family: 'Poppins', Helvetica, Arial, sans-serif;
 }
 #app {
+  display: flex;
   color: #2c3e50;
   margin: 20px;
-  /* border: 1px solid red; */
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-        <p class="all-stocks">All stocks</p>
+        <p class="all-stocks" @click="$emit('select-stock', 'All stocks')">All stocks</p>
         <div v-bind:key="stock.id" v-for="stock in stocks">
-            <Stock v-bind:stock="stock" />
+            <Stock v-bind:stock="stock" v-on:select-stock="$emit('select-stock', stock.name)" />
         </div>
     </div>
 </template>

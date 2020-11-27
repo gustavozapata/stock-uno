@@ -1,5 +1,5 @@
 <template>
-    <div class="stock-container" v-on:click="clicado">
+    <div class="stock-container" @click="$emit('select-stock', stock.name)">
         <div>
             <h3 v-bind:class="{'is-stock':stock.completed}">{{stock.name}}</h3>
             <p class="shares">{{stock.shares}} shares</p>
@@ -11,12 +11,7 @@
 <script>
 export default {
     name: "Stock",
-    props: ["stock"],
-    methods: {
-        clicado() {
-            console.log(this.stock.name)
-        }
-    }
+    props: ["stock"]
 }
 </script>
 
@@ -26,7 +21,6 @@ export default {
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    /* margin: 30px 0; */
 }
 .stock-container:hover {
     background-color: rgb(229, 234, 243);
