@@ -1,11 +1,14 @@
 <template>
   <div id="app">
-    <div>
-      <Header />
-      <StockContainer v-bind:stocks="stocks" v-on:select-stock="selectStock" />
-      <StockContainer v-bind:stocks="currencies" v-on:select-stock="selectStock" />
-    </div>
-    <Timeline v-bind:title="timelineTitle"/>
+    <Header v-on:add-stock="addStock" />
+    <main>
+      <div>
+        <StockContainer v-bind:stocks="stocks" v-on:select-stock="selectStock" />
+        <StockContainer v-bind:stocks="currencies" v-on:select-stock="selectStock" />
+        <StockContainer v-bind:stocks="api" v-on:select-stock="selectStock" />
+      </div>
+      <Timeline v-bind:title="title"/>
+    </main>
   </div>
 </template>
 
@@ -13,6 +16,7 @@
 import Header from './components/Header'
 import Timeline from "./components/Timeline"
 import StockContainer from './components/StockContainer'
+import axios from 'axios'
 
 export default {
   name: 'App',
@@ -23,7 +27,7 @@ export default {
   },
   data(){
     return {
-      timelineTitle: "All stocks",
+      title: "All stocks",
       currencies: [
          {
           id: 1,
@@ -58,13 +62,29 @@ export default {
           shares: 1,
           value: 204.0
         }
-      ]
+      ],
+      api: []
     }
   },
   methods: {
     selectStock(name){
-      this.timelineTitle = name
+      this.title = name
+    },
+    addStock(newStock){
+      this.stocks = [...this.stocks, newStock]
     }
+  },
+  created(){
+    // https://financialmodelingprep.com/developer/docs/
+    axios.get('https://financialmodelingprep.com/api/v3/quote/AAPL?apikey=demo')
+    .then(res => {
+      this.api[0] = {
+        name: res.data[0].name, 
+        value: res.data[0].price,
+        shares: res.data[0].change
+      }
+    })
+    .catch(err => console.log(err))
   }
 }
 </script>
@@ -79,8 +99,11 @@ body {
   font-family: 'Poppins', Helvetica, Arial, sans-serif;
 }
 #app {
+  margin: 30px;
+}
+main {
   display: flex;
   color: #2c3e50;
-  margin: 20px;
+  /* margin: 20px; */
 }
 </style>

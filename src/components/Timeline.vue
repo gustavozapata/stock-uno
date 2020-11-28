@@ -1,25 +1,18 @@
 <template>
   <div id="Timeline">
-      <h2>{{timelineTitle}}</h2>
-      <form @submit="addStock">
-        <input type="text" :value="title" placeholder="Titulo">
-      </form>
+      <h2>{{title}}</h2>
   </div>
 </template>
 
 <script>
 export default {
-    props: ['timelineTitle'],
-    data(){
-        return {
-            title: ''
-        }
-    }
+    name: 'Timeline',
+    props: ['title']
 }
 </script>
 
-<style>
+<style scoped>
 #Timeline {
-    margin: 50px
+    margin: 25px
 }
 </style>

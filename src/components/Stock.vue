@@ -30,6 +30,7 @@ export default {
 }
 .shares {
     color: #767676;
+    font-size: .85em;
     margin-top: 2px;
 }
 .price {
