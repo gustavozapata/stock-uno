@@ -4,7 +4,7 @@
             <h3 v-bind:class="{'is-stock':stock.completed}">{{stock.name}}</h3>
             <p class="shares">{{stock.shares}} shares</p>
         </div>
-        <p class="price">${{stock.value}}</p>
+        <p class="price">${{stock.value.toFixed(2)}}</p>
     </div>
 </template>
 
